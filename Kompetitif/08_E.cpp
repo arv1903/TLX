@@ -25,8 +25,6 @@ const int INF   = 1e9;
 const ld  EPS   = 1e-9;
 const ld  PI    = 3.1415926535897932384626433832795;
  
-bool prime(int a)  { if (a==1) return 0; for (int i=2;i*i<=a;i++) if (a%i==0) return 0; return 1; }
- 
 // NOTE : 0 (False), 1 (True)
  
 void solve(){
