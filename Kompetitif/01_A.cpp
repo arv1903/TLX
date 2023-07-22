@@ -35,7 +35,7 @@ void solve(){
     }
     sort(all(v), rule);
     for(int i = 0; i < m; i++) {
-        if(v[i].id == id) cout << "YA" << endl;
+        if(v[i].id == id) {cout << "YA" << endl; return;}
     }
     cout << "TIDAK" << endl;
 }
