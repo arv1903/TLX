@@ -42,9 +42,6 @@ int DP(int hh, int b) {
         int Llength = 0, Rlength = 0, temp1 = b, temp2 = b;
         while(grid[hh+1][temp1--] == 1) Llength++; // CEK PANJANG BRICK KE KIRI
         while(grid[hh+1][temp2++] == 1) Rlength++; // CEK PANJANG BRICK KE KANAN
-
-        // cout << hh << " " << b-Llength << " * " << hh << " " <<  b+Rlength << endl;
-
         return dp[hh][b] = DP(hh+1, b-Llength) + DP(hh+1, b+Rlength) + 1;
     } 
     return dp[hh][b] = DP(hh+1, b);
@@ -60,14 +57,6 @@ void solve(){
             }
         }
     }
-
-    // for(int i = 1; i <= vv; i++) {
-    //     for (int j = 1; j <= h; j++) {
-    //         cout << grid[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
-    // cout << endl;
 
     memset(dp, -1, sizeof(dp));
     for(int i = 1; i <= h; i++) {
