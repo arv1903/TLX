@@ -1,114 +1,66 @@
+/* Date : 2023, August 28 */ 
+
 #include <bits/stdc++.h>
 using namespace std;
+ 
+#define int      long long
+#define all(a)   (a).begin(), (a).end()
+#define pb       push_back
+#define pii      pair<int, int>
+#define ff       first
+#define ss       second
+ 
+#define lcm(a,b) (a * (b / __gcd(a,b)))
+#define dbg(x)   cout << '(' << ' ' << #x << ' ' << '=' << ' ' << x << ' ' << ')' << endl;
+ 
+const int MOD  = 1e9 + 7;
+const int INF  = 1e9;
+ 
+// UB = >, LB = >=
 
-#define ar array
-#define v vector
-#define ll long long
-#define ld long double 
-#define sza(x) ((int)x.size()) // RETURNS ARRAY SIZE
-#define all(a) (a).begin(), (a).end() // FOR VECTOR
+char g[25][25];
+int x, n, m; 
+bool con = 0;
 
-const int MAX_N = 1e5 + 5;
-const ll MOD = 1e9 + 7;
-const ll INF = 1e9;
-const ld EPS = 1e-9;
-
-int r, c, temp = 0, lowest = 0; string board[21], penuh = "", kosong = ""; bool special = false;
-v<pair<int, int> > vec; 
-
-bool cek(int i, int j) {
-    for (int k = 0; k < vec.size(); k++) 
-        if (i+1 == vec[k].first && j == vec[k].second) {
-            return false; break;
-        }
-    return true;
+void fall() {
+    for(int i = x-1; i >= 0; i--)
+        for(int j = 0; j < m; j++) 
+            if(g[i][j] == '1') 
+                for(int k = i+1; k < n; k++) {
+                    if(g[k][j] == '0') swap(g[k-1][j], g[k][j]);
+                    else break;
+                }
+    x = 0, con = 0;
 }
 
-void turun(int lowest) {
-
-    for (int i = r-1; i >= 0; i--){
-        if (board[i] != penuh && board[i] != kosong) {
-            for (int j = 0; j < c; j++) {
-                if (board[i][j] == '1' && board[i+1][j] == '0' && cek(i,j)){
-                    board[i][j] = '0';
-                    board[i+1][j] = '1';
-                }
-            }
+void remove_full() {
+    for(int i = 0; i < n; i++) {
+        bool full = 1;
+        for(int j = 0; j < m; j++) full &= g[i][j] == '1';
+        if(full) {
+            con = 1, x = i;
+            for(int j = 0; j < m; j++) g[i][j] = '0';
         }
     }
 }
-
-int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-
-    cin >> r >> c;
-    for (int i = 0; i < r; i++) cin >> board[i];
-    for (int i = 0; i < c; i++) {
-        penuh += '1'; kosong += '0';
+ 
+void solve(){
+    cin >> n >> m;
+    for(int i = 0; i < n; i++) for(int j = 0; j < m; j++) cin >> g[i][j];
+    remove_full();
+    while(con) {
+        fall(); remove_full();
+    } 
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) {
+            cout << g[i][j];
+        }
+        cout << endl;
     }
-
-    if (r == 1) {
-        if (board[0] == penuh){
-            cout << kosong << endl;
-        } else {
-            cout << board[0] << endl;
-        }
-    } else {
-        if (board[r-1] == penuh) {
-            board[r-1] = kosong; 
-            turun(lowest);
-            special = true;
-        }
-
-        bool first = true;
-        for(int i = r-1; i >= 0; i--) {
-            if (board[i] == penuh) {
-                if (first) {
-                    if (!special) lowest = i; 
-                    else lowest = r-1;
-                    
-                    first = false;
-                }
-            }
-        }
-
-        
-
-
-        for (int i = 0; i < r; i++) if (board[i] == penuh) board[i] = kosong;
-
-        for (int i = lowest; i < r; i++)
-            for (int j = 0; j < c; j++)
-                if (board[i][j] == '0' && i > lowest && board[i-1][j] == '1'){
-                    vec.push_back(make_pair(i,j));
-                }
-
-        int t=100;
-        while (t--) {
-            for (int i = 0; i < r; i++) if (board[i] == penuh) {
-                board[i] = kosong;
-                lowest = i+1;
-                for (int i = 0; i < vec.size(); i++) {
-                    if (vec[i].first == lowest){
-                        vec.erase(remove(all(vec), vec[i]), vec.end());
-                        i--;
-                    }
-                } 
-                turun(lowest);
-            }
-            turun(lowest);
-        }
-
-
-        if (board[r-1] == penuh) {
-            board[r-1] = kosong; turun(lowest);
-        }
-
-        for (int i = 0; i < r; i++) {
-            cout << board[i] << endl;
-        }
-    }
-
+}
+ 
+signed main(){
+    ios_base::sync_with_stdio(false); cin.tie(nullptr);
+    solve();
     return 0;
 }
