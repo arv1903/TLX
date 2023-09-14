@@ -1,23 +1,34 @@
+/* Date : 2023, September 12 */ 
+
 #include <bits/stdc++.h>
 using namespace std;
-
-void solve() {
-    string main, sub; cin >> main >> sub; int iS, counter = 0; bool con=false;
+ 
+#define int      long long
+#define all(a)   (a).begin(), (a).end()
+#define pb       push_back
+#define pii      pair<int, int>
+ 
+#define dbg(x)   cout << '(' << ' ' << #x << ' ' << '=' << ' ' << x << ' ' << ')' << endl;
+ 
+const int MOD  = 1e9 + 7;
+const int INF  = 1e9;
+ 
+// UB = >, LB = >=
+ 
+void Solve(){
+    string main, sub; cin >> main >> sub; int iS, cnt = 0; bool con = 0;
 
     if (main.length() > sub.length()) {
         for (int i = 0; i < main.length(); i++) {
             iS = i; if (con) iS--;
-            if (main[i] == sub[iS]){
-                counter++;
-            } else con = true;
+            (main[i] == sub[iS] ? cnt++ : con = 1);
         }
     }
-    (counter == sub.length() ? cout << "Tentu saja bisa!" << endl : cout << "Wah, tidak bisa :(" << endl);
+    cout << (sub.length() == cnt ? "Tentu saja bisa!" : "Wah, tidak bisa :(") << endl;
 }
-
-int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-    
-    solve();
+ 
+signed main(){
+    ios_base::sync_with_stdio(false); cin.tie(nullptr);
+    Solve();
+    return 0;
 }

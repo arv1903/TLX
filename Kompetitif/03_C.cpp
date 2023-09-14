@@ -1,33 +1,35 @@
+/* Date : 2023, September 12 */ 
+
 #include <bits/stdc++.h>
 using namespace std;
-
-pair<string, string> arr[100000];
-string nama, x, telp;
-int N, Q;
-
-int main() {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-    cin >> N >> Q;
-    for (int t = 0; t < N; t++) {
-        cin >> nama >> telp;
-        arr[t] = make_pair(nama, telp);
+ 
+#define int      long long
+#define all(a)   (a).begin(), (a).end()
+#define pb       push_back
+#define pii      pair<int, int>
+ 
+#define dbg(x)   cout << '(' << ' ' << #x << ' ' << '=' << ' ' << x << ' ' << ')' << endl;
+ 
+const int MOD  = 1e9 + 7;
+const int INF  = 1e9;
+ 
+// UB = >, LB = >=
+ 
+void Solve(){
+    int n, q; cin >> n >> q;
+    vector<string> N(n), T(n);
+    for(int i = 0; i < n; i++) cin >> N[i] >> T[i];
+    for(int i = 0; i < q; i++) {
+        string s; cin >> s;
+        int id = lower_bound(all(N), s) - N.begin();
+        if(id == n) cout << "NIHIL" << endl;
+        else if(N[id] == s) cout << T[id] << '\n';
+        else cout << "NIHIL" << endl;
     }
-
-    for(int i = 0; i < Q; i++) {
-        string name; cin >> name;
-        int l = 0, r = N-1, ans = 0, pos=0;
-        while(l <= r) {
-            int mid = (r+l)/2;
-            if (arr[mid].first >= name) {
-                r=mid-1;
-                pos=mid;
-            }
-            else l=mid+1;
-        }
-        if(arr[pos].first==name)cout<<arr[pos].second<<endl;
-        else cout<<"NIHIL"<<endl;
-    }
-
-
+}
+ 
+signed main(){
+    ios_base::sync_with_stdio(false); cin.tie(nullptr);
+    Solve();
+    return 0;
 }
